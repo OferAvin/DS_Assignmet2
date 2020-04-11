@@ -11,17 +11,29 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer get(int index){
-        // TODO: implement your code here
+    	return arr[index];
     }
 
     @Override
     public Integer search(int x) {
-        // TODO: implement your code here
+        int ans=-1;
+        for(int i=0;i<arr.length & ans==-1;i=i+1) {
+        	if(arr[i]==x) {
+        		ans=i;
+        	}
+        }
+        return ans;
     }
 
     @Override
     public void insert(Integer x) {
-        // TODO: implement your code here
+        int[] arr2=new int[arr.length+1];
+        for(int i=0;i<arr.length;i=i+1) {
+        	arr2[i]=arr[i];
+        }
+        arr2[arr.length+1]=x;
+        stack.push(arr);
+        arr=arr2;
     }
 
     @Override

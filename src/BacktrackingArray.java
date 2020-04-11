@@ -27,13 +27,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public void insert(Integer x) {
-        int[] arr2=new int[arr.length+1];
-        for(int i=0;i<arr.length;i=i+1) {
-        	arr2[i]=arr[i];
-        }
-        arr2[arr.length+1]=x;
-        stack.push(arr);
-        arr=arr2;
+    
     }
 
     @Override
@@ -43,12 +37,24 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer minimum() {
-        // TODO: implement your code here
+        int min=arr[0];
+        for(int i=1;i<=arr.length-1;i=i+1) {
+        	if(min>arr[i]) {
+        		min=arr[i];
+        	}
+        }
+        return min;
     }
 
     @Override
     public Integer maximum() {
-        // TODO: implement your code here
+        int max=arr[0];
+        for(int i=1;i<=arr.length-1;i=i+1) {
+        	if(max<arr[i]) {
+        		max=arr[i];
+        	}
+        }
+        return max;
     }
 
     @Override
@@ -73,6 +79,16 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public void print() {
-        // TODO: implement your code here
+       for(int i=0;i<arr.length-1;i=i+1)
+    	   System.out.print(arr[i]+" ");
+       System.out.print(arr[arr.length-1]);
     }
+    public static void main(String[] args) {
+    	BacktrackingArray tamirBacktrackingArray=new BacktrackingArray(null, 5);
+    	tamirBacktrackingArray.print();
+    	System.out.println();
+    	System.out.println(tamirBacktrackingArray.maximum());
+		
+	}
 }
+

@@ -42,7 +42,8 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     	if(value >= size) {}
     	int index = search(value);
     	if(index != -1) {
-    		arr[index] = arr[size];
+    		arr[index] = arr[size-1];
+    		size = size-1;
 	    	stack.push(value);
 	    	stack.push(index);
 	    	stack.push(false);
@@ -93,20 +94,28 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public void print() {
-       for(int i=0;i<arr.length-1;i=i+1)
+       for(int i=0;i<size-1;i=i+1)
     	   System.out.print(arr[i]+" ");
-       System.out.print(arr[arr.length-1]);
+       System.out.print(arr[size-1]);
+       System.out.println();
     }
-<<<<<<< HEAD
+
     public static void main(String[] args) {
-    	BacktrackingArray tamirBacktrackingArray=new BacktrackingArray(null, 5);
+    	BacktrackingArray tamirBacktrackingArray=new BacktrackingArray(new Stack(), 5);
+    	tamirBacktrackingArray.insert(3);
+    	tamirBacktrackingArray.insert(9);
+    	tamirBacktrackingArray.insert(1);
+    	tamirBacktrackingArray.insert(4);
+    	tamirBacktrackingArray.insert(7);
     	tamirBacktrackingArray.print();
-    	System.out.println();
     	System.out.println(tamirBacktrackingArray.maximum());
-		
+    	System.out.println(tamirBacktrackingArray.minimum());
+    	tamirBacktrackingArray.delete(9);
+    	tamirBacktrackingArray.print();
+    	tamirBacktrackingArray.delete(1);
+    	tamirBacktrackingArray.print();
+    	System.out.println(tamirBacktrackingArray.maximum());
+    	System.out.println(tamirBacktrackingArray.minimum());
 	}
-=======
-    
->>>>>>> d4fc371882c241afff5129ab71422c4df6b6a8b9
 }
 

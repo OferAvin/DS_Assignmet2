@@ -4,7 +4,7 @@ public class Warmup {
     }
 
     public static int consistentBinSearch(int[] arr, int x, Stack myStack) {
-        // TODO: implement your code here
+       fkajsdhf;ajsf
     }
 
     private static int isConsistent(int[] arr) {

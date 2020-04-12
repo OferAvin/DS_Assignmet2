@@ -14,25 +14,33 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 	
     public Node search(int x) {
-    	if(getRoot() == null)
-    		return null;
-    	return root.search(x);
+    	BacktrackingBST.Node node = root;
+    	while(node != null) {
+    		if(node.getKey() == x)
+    			break;
+    		if(node.getKey() > x)
+    			node = node.left;
+    		else
+    			node = node.right;
+    	}
+    	return node;
     }
 
     public void insert(BacktrackingBST.Node z) {
-        // TODO: implement your code here
+    	this.addNode(z);
+    	
     }
 
     public void delete(Node x) {
-        // TODO: implement your code here
+        this.removeNode(x);
     }
 
     public Node minimum() {
-        // TODO: implement your code here
+    	return subTreeMin(root);
     }
 
     public Node maximum() {
-        // TODO: implement your code here
+    	return subTreeMax(root);
     }
 
     public Node successor(Node x) {
@@ -61,7 +69,77 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     public void print() {
         // TODO: implement your code here
     }
-
+    
+    private void addNode(BacktrackingBST.Node z) {
+    	BacktrackingBST.Node parent = null;
+    	BacktrackingBST.Node node = root;
+    	while(node != null) {
+    		parent = node;
+    		if(node.getKey() > z.getKey())
+    			node = node.left;
+    		else
+    			node = node.right;
+    	}
+    	z.parent = parent;
+    	if(parent == null)
+    		root = z;
+    	else if(z.parent.getKey() > z.getKey())
+    		parent.left = z;
+    	else
+    		parent.right = z;
+    }
+    
+    private Node removeNode(Node x){
+    	Node toRemove = root;
+    	Node toReturn = null;
+    	while(toRemove != null) {
+    		if(toRemove.getKey() > x.getKey())
+    			toRemove = toRemove.left;
+    		else if(toRemove.getKey() < x.getKey())
+    			toRemove = toRemove.right;
+    		else {
+    			toReturn = toRemove;
+    			if(toRemove.left == null || toRemove.right == null )
+    				leafOrOneChildeRM(toRemove);
+    			else
+    				twoChildeNodeRM(toRemove);
+    			break;
+    		}
+    	}
+    	return toReturn;
+    }
+    private void leafOrOneChildeRM(Node toRemove) {
+    	Node parent = toRemove.parent;
+    	Node childe;
+    	if(toRemove.left == null)
+    		childe = toRemove.right;
+    	else
+    		childe = toRemove.left;
+    	if(parent.left.getKey() == toRemove.getKey())
+    		parent.left = childe;
+    	else
+    		parent.right = childe;
+    }
+    private void twoChildeNodeRM(Node toRemove) {
+    	Node rightSubTreeMin = subTreeMin(toRemove.right);
+    	removeNode(rightSubTreeMin);
+    	toRemove.key = rightSubTreeMin.getKey();
+    	toRemove.value = rightSubTreeMin.getValue();
+    }
+    private Node subTreeMin(Node x) {
+        Node min = x;
+        while(min.left != null) {
+        	min = min.left;
+        }
+        return new Node(min.key, min.value);    	
+    }
+    private Node subTreeMax(Node x) {
+        Node max = x;
+        while(max.right != null) {
+        	max = max.right;
+        }
+        return new Node(max.key, max.value);
+    }
     public static class Node{
     	//These fields are public for grading purposes. By coding conventions and best practice they should be private.
         public BacktrackingBST.Node left;
@@ -83,14 +161,26 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         public Object getValue() {
             return value;
         }
-        private BacktrackingBST.Node search(int x){
-        	if(key == x)
-        		return this;
-        	else if(key > x)
-        		return left.search(x);
-        	else
-        		return right.search(x);
-        }
     }
-
+    public static void main(String[] args) {
+    	BacktrackingBST Tree = new BacktrackingBST(new Stack(), new Stack());
+    	Node ofer = new Node(3, 3);
+		Node o = new Node(1, 1);
+		Node f = new Node(7, 7);
+		Node c = new Node(2 , 2);
+		Node d = new Node(4, 4);
+		Tree.insert(ofer);
+		Tree.insert(o);
+		Tree.insert(f);
+		Tree.insert(c);
+		Tree.insert(d);
+		System.out.println(Tree.search(1).getValue() + " " + Tree.search(7).getValue() + " " + Tree.search(4).getValue());
+		System.out.println(Tree.minimum().getValue() + " " + Tree.maximum().getKey());
+		Tree.insert(new Node(0, 1));
+		Tree.insert(new Node(9, 9));
+		Tree.delete(new Node(0, 0));
+		System.out.println(Tree.minimum().getKey() + " " + Tree.maximum().getKey());
+		System.out.println(Tree.root.getKey());
+		System.out.println(Tree.root.getKey());
+	}
 }

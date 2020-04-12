@@ -79,8 +79,8 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     	for(int i=0;i<size;i=i+1) {
         	if(arr[i]>arr[index]) {
         		max = arr[i];
-        		if(cond | max<succesor) {
-        			succesor = max;
+        		if(cond || max<arr[succesor]) {
+        			succesor = i;
         			cond = false;
         		}
         	}
@@ -109,7 +109,8 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     public void backtrack() {
         if(!stack.isEmpty()) {
         	if((boolean)stack.pop()==true) {
-        		delete(arr[size-1]);
+        		size =  size-1;
+        		
         	}
         	else {
         		int index = (int)stack.pop();
@@ -133,5 +134,15 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
        System.out.print(arr[size-1]);
        System.out.println();
     }
+    public static void main(String[] args) {
+		BacktrackingArray tamir = new BacktrackingArray(new Stack(), 6);
+		tamir.insert(3);
+		tamir.insert(1);
+		tamir.insert(9);
+		tamir.insert(7);
+		tamir.insert(13);
+		tamir.print();
+		System.out.println(tamir.successor(3));
+	}
 }
 

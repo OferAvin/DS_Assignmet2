@@ -14,7 +14,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 	
     public Node search(int x) {
-        // TODO: implement your code here
+    	if(getRoot() == null)
+    		return null;
+    	return root.search(x);
     }
 
     public void insert(BacktrackingBST.Node z) {
@@ -80,6 +82,14 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 
         public Object getValue() {
             return value;
+        }
+        private BacktrackingBST.Node search(int x){
+        	if(key == x)
+        		return this;
+        	else if(key > x)
+        		return left.search(x);
+        	else
+        		return right.search(x);
         }
     }
 

@@ -108,7 +108,19 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public void backtrack() {
-        if(!stack.isEmpty())
+        if(!stack.isEmpty()) {
+        	if((boolean)stack.pop()==true) {
+        		delete(arr[size-1]);
+        	}
+        	else {
+        		int index = (int)stack.pop();
+        		int value = (int)stack.pop();
+        		arr[size] = arr[index];
+        		arr[index] = value;
+        		size = size+1;
+        	}
+        }
+        
         	
     }
 
@@ -129,6 +141,9 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     	BacktrackingArray tamirBacktrackingArray=new BacktrackingArray(new Stack(), 9);
     	tamirBacktrackingArray.insert(3);
     	tamirBacktrackingArray.insert(9);
+    	tamirBacktrackingArray.print();
+    	tamirBacktrackingArray.backtrack();
+    	tamirBacktrackingArray.print();
     	tamirBacktrackingArray.insert(1);
     	tamirBacktrackingArray.insert(4);
     	tamirBacktrackingArray.insert(7);
@@ -140,9 +155,13 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     	tamirBacktrackingArray.print();
     	tamirBacktrackingArray.delete(1);
     	tamirBacktrackingArray.print();
+    	tamirBacktrackingArray.backtrack();
+    	tamirBacktrackingArray.print();
+    	tamirBacktrackingArray.backtrack();
+    	tamirBacktrackingArray.print();
     	System.out.println(tamirBacktrackingArray.maximum());
     	System.out.println(tamirBacktrackingArray.minimum());
-    	System.out.println(tamirBacktrackingArray.predecessor(2));
+    	System.out.println(tamirBacktrackingArray.predecessor(1));
 	}
 }
 

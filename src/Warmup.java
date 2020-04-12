@@ -57,11 +57,6 @@ public class Warmup {
             return 0;
         }
     }
-    
-    public static void main(String[] args) {
-    	int[] arr = new int[]{3,5,7,8,22,44,54,55,66,67,455};
-    	System.out.println(consistentBinSearch(arr,2222,new Stack()));
-    }
 }
 
 	

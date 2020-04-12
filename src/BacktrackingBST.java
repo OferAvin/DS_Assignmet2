@@ -162,25 +162,4 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             return value;
         }
     }
-    public static void main(String[] args) {
-    	BacktrackingBST Tree = new BacktrackingBST(new Stack(), new Stack());
-    	Node ofer = new Node(3, 3);
-		Node o = new Node(1, 1);
-		Node f = new Node(7, 7);
-		Node c = new Node(2 , 2);
-		Node d = new Node(4, 4);
-		Tree.insert(ofer);
-		Tree.insert(o);
-		Tree.insert(f);
-		Tree.insert(c);
-		Tree.insert(d);
-		System.out.println(Tree.search(1).getValue() + " " + Tree.search(7).getValue() + " " + Tree.search(4).getValue());
-		System.out.println(Tree.minimum().getValue() + " " + Tree.maximum().getKey());
-		Tree.insert(new Node(0, 1));
-		Tree.insert(new Node(9, 9));
-		Tree.delete(new Node(0, 0));
-		System.out.println(Tree.minimum().getKey() + " " + Tree.maximum().getKey());
-		System.out.println(Tree.root.getKey());
-		System.out.println(Tree.root.getKey());
-	}
 }

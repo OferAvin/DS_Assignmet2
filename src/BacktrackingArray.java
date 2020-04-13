@@ -96,8 +96,8 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         for(int i=0;i<size;i=i+1) {
         	if(arr[i]<arr[index]) {
         		min = arr[i];
-        		if(cond | min>predecessor) {
-        			predecessor = min;
+        		if(cond || min>arr[predecessor]) {
+        			predecessor = i;
         			cond = false;
         		}
         	}
@@ -134,15 +134,5 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
        System.out.print(arr[size-1]);
        System.out.println();
     }
-    public static void main(String[] args) {
-		BacktrackingArray tamir = new BacktrackingArray(new Stack(), 6);
-		tamir.insert(3);
-		tamir.insert(1);
-		tamir.insert(9);
-		tamir.insert(7);
-		tamir.insert(13);
-		tamir.print();
-		System.out.println(tamir.successor(3));
-	}
 }
 

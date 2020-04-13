@@ -14,16 +14,16 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 	
     public Node search(int x) {
-    	BacktrackingBST.Node node = root;
-    	while(node != null) {
-    		if(node.getKey() == x)
+    	BacktrackingBST.Node currNode = root;
+    	while(currNode != null) {
+    		if(currNode.getKey() == x)
     			break;
-    		if(node.getKey() > x)
-    			node = node.left;
+    		if(currNode.getKey() > x)
+    			currNode = currNode.left;
     		else
-    			node = node.right;
+    			currNode = currNode.right;
     	}
-    	return new Node(node);
+    	return new Node(currNode);
     }
 
     public void insert(BacktrackingBST.Node z) {
@@ -45,25 +45,32 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 
     public Node successor(Node x) {
     	Node ans = x;
-    	if(ans.right == null) 
+    	if(ans.right == null){
     		while(ans != null && !amILeftChilde(ans))
     			ans = ans.parent;
+    		if(ans == null)
+        		return null;
+    		else
+    			ans = ans.parent;
+    	}
     	else
     		ans = subTreeMin(ans.right);
-    	if(ans == null)
-    		return null;
     	return new Node(ans);
     }
 
     public Node predecessor(Node x) {
         Node ans = x;
-        if(ans.left == null)
-        	while(ans != null && !amIRightChilde(ans))
+        if(ans.left == null) {
+        	while(ans != null && !amIRightChilde(ans)) 
         		ans = ans.parent;
+        	if(ans == null)
+        		return null;
+        	else
+        		ans = ans.parent;
+        }
         else
         	ans = subTreeMax(ans.left);
-    	if(ans == null)
-    		return null;
+    	
     	return new Node(ans);
     }
 
@@ -157,22 +164,24 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         while(min.left != null) {
         	min = min.left;
         }
-        return new Node(min.key, min.value);    	
+        return min;    	
     }
     private Node subTreeMax(Node x) {
         Node max = x;
         while(max.right != null) {
         	max = max.right;
         }
-        return new Node(max.key, max.value);
+        return max;
     }
     private boolean amILeftChilde(Node x) {
     	Node parent = x.parent;
-    	return parent.left.getKey() == x.getKey();
+    	boolean parentExists = parent != null;
+    	return parentExists && parent.left != null && parent.left.getKey() == x.getKey();
     }
     private boolean amIRightChilde(Node x) {
     	Node parent = x.parent;
-    	return parent.right.getKey() == x.getKey();
+    	boolean parentExists = parent != null;
+    	return parentExists && parent.right != null && parent.right.getKey() == x.getKey();
     }
     private boolean amILeaf(Node x) {
     	return x.left == null && x.right == null;
@@ -219,21 +228,21 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 		Tree.insert(f);
 		Tree.insert(c);
 		Tree.insert(d);
-		System.out.println(Tree.search(1).getValue() + " " + Tree.search(7).getValue() + " " + Tree.search(4).getValue());
-		System.out.println(Tree.minimum().getValue() + " " + Tree.maximum().getKey());
+//		System.out.println(Tree.search(1).getValue() + " " + Tree.search(7).getValue() + " " + Tree.search(4).getValue());
+//		System.out.println(Tree.minimum().getValue() + " " + Tree.maximum().getKey());
 		Tree.insert(new Node(0, 1));
 		Tree.insert(new Node(9, 9));
 		Tree.insert(new Node(10, 10));
-		System.out.println(Tree.minimum().getKey() + " " + Tree.maximum().getKey());
-		System.out.println(Tree.predecessor(Tree.search(10)).getKey()+" 10 pred");
-		System.out.println(Tree.search(10).parent.getValue()+ " parent");
-		Tree.delete(new Node(9, 9));
-		Tree.delete(new Node(0, 0));
-		System.out.println(Tree.search(10).parent.getValue()+ " parent");
-		System.out.println(Tree.minimum().getKey() + " " + Tree.maximum().getKey());
-		System.out.println(Tree.root.getKey());
-		Tree.delete(new Node(3, 3));
-		System.out.println(Tree.root.getKey());
-		System.out.println(Tree.search(1).parent.getValue()+ " parent");
+//		System.out.println(Tree.minimum().getKey() + " " + Tree.maximum().getKey());
+		System.out.println(Tree.predecessor(Tree.search(2)).key);
+//		System.out.println(Tree.search(10).parent.getValue()+ " parent");
+//		Tree.delete(new Node(9, 9));
+//		Tree.delete(new Node(0, 0));
+//		System.out.println(Tree.search(10).parent.getValue()+ " parent");
+//		System.out.println(Tree.minimum().getKey() + " " + Tree.maximum().getKey());
+//		System.out.println(Tree.root.getKey());
+//		Tree.delete(new Node(3, 3));
+//		System.out.println(Tree.root.getKey());
+//		System.out.println(Tree.search(1).parent.getValue()+ " parent");
 	}
 }

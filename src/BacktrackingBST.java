@@ -62,12 +62,13 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 
     public void printPreOrder(){
-        // TODO: implement your code here
+    	BacktrackingBST.Node node = root;
+    	node.printPreOrder(node);
     }
 
     @Override
     public void print() {
-        // TODO: implement your code here
+    	printPreOrder();
     }
     
     private void addNode(BacktrackingBST.Node z) {
@@ -161,5 +162,23 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         public Object getValue() {
             return value;
         }
+        private void printPreOrder(Node x) {
+			while(x != null) {
+				System.out.print(x.key + " ");
+				printPreOrder(x.left);
+				printPreOrder(x.right);
+			}
+		}
     }
+    public static void main(String[] args) {
+		BacktrackingBST tamir = new BacktrackingBST(new Stack(), new Stack());
+		tamir.insert(new Node(7, 7));
+		tamir.insert(new Node(5, 5));
+		tamir.insert(new Node(6, 6));
+		tamir.insert(new Node(2, 2));
+		tamir.insert(new Node(8, 8));
+		tamir.insert(new Node(90, 90));
+		tamir.printPreOrder();
+		
+	}
 }

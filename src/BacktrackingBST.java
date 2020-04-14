@@ -27,12 +27,15 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 
     public void insert(BacktrackingBST.Node z) {
-    	this.addNode(z);
-    	
+    	Node inserted = this.addNode(z);
+    	stack.push(inserted);
+    	stack.push(true);
     }
 
     public void delete(Node x) {
-		this.removeNode(x, root);
+		Node removed = this.removeNode(x, root);
+    	stack.push(removed);
+    	stack.push(false);
     }
 
     public Node minimum() {
@@ -44,9 +47,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 
     public Node successor(Node x) {
-    	Node ans = x;
+    	Node ans = search(x.key);;
     	if(ans.right == null){
-    		while(ans != null && !amILeftChilde(ans))
+    		while(ans != null && !amILeftChild(ans))
     			ans = ans.parent;
     		if(ans == null)
         		return null;
@@ -59,9 +62,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 
     public Node predecessor(Node x) {
-        Node ans = x;
+        Node ans = search(x.key);
         if(ans.left == null) {
-        	while(ans != null && !amIRightChilde(ans)) 
+        	while(ans != null && !amIRightChild(ans)) 
         		ans = ans.parent;
         	if(ans == null)
         		return null;
@@ -76,44 +79,97 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 
     @Override
     public void backtrack() {
-        // TODO: implement your code here
+        boolean action = (boolean)stack.pop();
+        Node node = (Node)stack.pop();
+        if(action) 
+        	leafRemove(node);
+        else
+        	deleteBacktrack(node);
     }
-
+    private void deleteBacktrack(Node node) {
+    	insertAsChild(node);
+////    	if(amILeaf(node))  //backtrack a leaf deletion
+////			insert(node);
+//		if(node.left == null || node.right == null) //backtrack a one child node deletion
+//			fixChildren(node);
+		if(node.right != null && node.left != null) {  //backtrack a one child node deletion
+			Node toReInsert = (Node)stack.pop(); //this is the node that replaced the deleted node
+			insertAsChild(toReInsert);
+		}
+		fixChildren(node);
+	}
+    private void fixChildren(Node node) {
+		if(node.left != null)
+			node.left.parent = node;
+		if(node.right != null)
+			node.right.parent = node;
+	}
+    private void insertAsChild(Node child) {
+    	Node parent = child.parent;
+    	if(parent == null) {
+			root = child;
+    	}
+    	else {
+    		if(amILeftChild(child))
+    			parent.left = child;
+    		else
+    			parent.right = child;
+    	}
+    }
     @Override
     public void retrack() {
         // TODO: implement your code here
     }
 
     public void printPreOrder(){
-    	root.printPreOrder(root);
+    	if(this.isEmpty())
+    		System.out.println("null");
+    	else {
+	    	root.printPreOrder(root);
+	    	System.out.println();
+    	}
     }
 
     @Override
     public void print() {
     	printPreOrder();
     }
-    private boolean isEmpty(BacktrackingBST tree) {
-    	return tree.root == null;
+    private boolean isEmpty() {
+    	return this.root == null;
     }
     
-    private void addNode(BacktrackingBST.Node z) {
-    	BacktrackingBST.Node parent = null;
-    	BacktrackingBST.Node node = root;
-    	while(node != null) {
-    		parent = node;
-    		if(node.getKey() > z.getKey())
-    			node = node.left;
+    private Node addNode(BacktrackingBST.Node z) {
+    	Node parent = null;
+    	Node currNode = root;
+    	while(currNode != null) {
+    		parent = currNode;
+    		if(currNode.getKey() > z.getKey())
+    			currNode = currNode.left;
     		else
-    			node = node.right;
+    			currNode = currNode.right;
     	}
     	z.parent = parent;
-    	if(parent == null)
-    		root = z;
-    	else if(z.parent.getKey() > z.getKey())
-    		parent.left = z;
-    	else
-    		parent.right = z;
+    	insertAsChild(z);
+//    	if(parent == null)
+//    		root = z;
+//    	else if(z.parent.getKey() > z.getKey())
+//    		parent.left = z;
+//    	else
+//    		parent.right = z;
+    	return new Node(z);
     }
+//    private void insertAsChild(Node child) {
+//    	Node parent = child.parent;
+//    	if(parent == null) {
+//			root = child;
+//    	}
+//    	else {
+//    		if(amILeftChild(child))
+//    			parent.left = child;
+//    		else
+//    			parent.right = child;
+//    	}
+//    }
     
     private Node removeNode(Node x, Node from){
     	Node toRemove = from;
@@ -124,11 +180,11 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     		else if(toRemove.getKey() < x.getKey())
     			toRemove = toRemove.right;
     		else {
-    			toReturn = toRemove;
+    			toReturn = new Node(toRemove);
     			if(amILeaf(toRemove))
     				leafRemove(toRemove);
     			else if(toRemove.left == null || toRemove.right == null )
-    				oneChildeNodeRM(toRemove);
+    				oneChildNodeRM(toRemove);
     			else
     				twoChildrenNodeRM(toRemove);
     			break;
@@ -138,50 +194,61 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
     private void leafRemove(Node toRemove) {
     	Node parent = toRemove.parent;
-    	if(amILeftChilde(toRemove))
-    		parent.left = null;
-    	else
-    		parent.right = null;
+    	if(parent == null) 
+    		root = null;
+    	else {
+	    	if(amILeftChild(toRemove))
+	    		parent.left = null;
+	    	else
+	    		parent.right = null;
+    	}
     }
-    private void oneChildeNodeRM(Node toRemove) {
+    private void oneChildNodeRM(Node toRemove) {
     	Node parent = toRemove.parent;
-    	Node childe;
+    	Node child;
     	if(toRemove.left == null) 
-    		childe = toRemove.right;
+    		child = toRemove.right;
     	else
-    		childe = toRemove.left;
-		parent.right = childe;
-		childe.parent = parent;
+    		child = toRemove.left;
+    	child.parent = parent;
+    	if (parent == null)
+    		root = child;
+    	else if(amILeftChild(toRemove))
+    		parent.left = child;
+    	else
+    		parent.right = child;
     }
     private void twoChildrenNodeRM(Node toRemove) {
-    	Node rightSubTreeMin = subTreeMin(toRemove.right);
-    	removeNode(rightSubTreeMin, toRemove.right );
+    	Node rightSubTreeMin = subTreeMin(toRemove.right);  //look for replacement 
+    	stack.push(removeNode(rightSubTreeMin, toRemove.right ));//push replacement to stack for backtracking
     	toRemove.key = rightSubTreeMin.getKey();
     	toRemove.value = rightSubTreeMin.getValue();
     }
-    private Node subTreeMin(Node x) {
-        Node min = x;
+    private Node subTreeMin(Node subTreeRoot) {
+        Node min = subTreeRoot;
         while(min.left != null) {
         	min = min.left;
         }
         return min;    	
     }
-    private Node subTreeMax(Node x) {
-        Node max = x;
+    private Node subTreeMax(Node subTreeRoot) {
+        Node max = subTreeRoot;
         while(max.right != null) {
         	max = max.right;
         }
         return max;
     }
-    private boolean amILeftChilde(Node x) {
+    private boolean amILeftChild(Node x) {
     	Node parent = x.parent;
     	boolean parentExists = parent != null;
-    	return parentExists && parent.left != null && parent.left.getKey() == x.getKey();
+    	return parentExists && parent.getKey() > x.getKey();
+//    	return parentExists && parent.left != null && parent.left.getKey() == x.getKey();
     }
-    private boolean amIRightChilde(Node x) {
+    private boolean amIRightChild(Node x) {
     	Node parent = x.parent;
     	boolean parentExists = parent != null;
-    	return parentExists && parent.right != null && parent.right.getKey() == x.getKey();
+    	return parentExists && parent.getKey() < x.getKey();
+//    	return parentExists && parent.right != null && parent.right.getKey() == x.getKey();
     }
     private boolean amILeaf(Node x) {
     	return x.left == null && x.right == null;
@@ -223,4 +290,34 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 			}
 		}
     }
+    
+    public static void main(String[] args) {
+		BacktrackingBST tree = new BacktrackingBST(new Stack(), new Stack());
+		tree.insert(new Node(4, 4));
+//		tree.delete(new Node(4, 4));
+		tree.insert(new Node(7, 7));
+//		tree.print();
+//		tree.backtrack();
+//		tree.print();
+		tree.insert(new Node(2, 2));
+		tree.insert(new Node(3, 3));
+		tree.insert(new Node(5, 5));
+		tree.insert(new Node(1, 1));
+		tree.insert(new Node(9, 9));
+		tree.insert(new Node(8, 8));
+//		System.out.println(tree.maximum().key+" "+tree.minimum().key);
+//		System.out.println(tree.predecessor(new Node(7,7)).key+" "+tree.predecessor(new Node(1,1)));
+//		System.out.println(tree.successor(new Node(7,7)).key+" "+tree.successor(new Node(1,1)).key);
+//		tree.print();
+//		tree.delete(new Node(4, 4));
+		tree.print();
+		tree.backtrack();
+		tree.backtrack();
+		tree.backtrack();
+		tree.backtrack();
+		tree.print();
+		tree.delete(new Node(2, 2));
+//		tree.print();
+//		System.out.println(tree.search(2).parent.key);
+	}
 }

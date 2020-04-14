@@ -108,13 +108,9 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     @Override
     public void backtrack() {
         if(!stack.isEmpty()) {
-        	if((boolean)stack.pop()==true) {
-<<<<<<< HEAD
+        	if((boolean)stack.pop()) {
         		delete(arr[size-1]);
-=======
-        		size =  size-1;
->>>>>>> b354d31bc345b4f9798e4d24265d818c44cafbbf
-        		
+        		size = size-1;
         	}
         	else {
         		int index = (int)stack.pop();
@@ -128,7 +124,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public void retrack() {
-        
+    	// Do not implement anything here!!
     }
 
     @Override

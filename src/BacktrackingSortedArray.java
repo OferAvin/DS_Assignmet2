@@ -40,7 +40,6 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     	int index_to_insert = toInsert(x);
     	add(x, index_to_insert);
         stack.push(index_to_insert);
-        stack.push(x);
         stack.push(true);
         }
     private void add(Integer x,int index_to_insert ) {
@@ -84,6 +83,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     public void delete(Integer index) {
         int value = arr[index];
         remove(index);
+        stack.push(index);
         stack.push(value);
         stack.push(false);
     }
@@ -151,4 +151,17 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         System.out.print(arr[size-1]);
         System.out.println();
     }
+    public static void main(String[] args) {
+		BacktrackingSortedArray tamir = new BacktrackingSortedArray(new Stack(), 3);
+		tamir.insert(4);
+		tamir.insert(3);
+		tamir.insert(9);
+		tamir.print();
+		tamir.backtrack();
+		tamir.print();
+		tamir.delete(1);
+		tamir.print();
+		tamir.backtrack();
+		tamir.print();
+	}
 }

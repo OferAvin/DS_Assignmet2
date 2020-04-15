@@ -133,8 +133,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 	        stack.push(action);
     	}
     }
-<<<<<<< HEAD
-=======
     private void deleteRetrack(Node toRemove) {
 		if(amILeaf(toRemove))
 			leafRemove(toRemove);
@@ -148,7 +146,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 		}
 	}
 
->>>>>>> 083ba1a766fbd0f1f0f13d076beab2d84d1b6c53
     public void printPreOrder(){
     	if(this.isEmpty())
     		System.out.println("null");
@@ -177,14 +174,8 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     	}
     	z.parent = parent;
     	insertAsChild(z);
-<<<<<<< HEAD
-    	return new Node(z);
-    }
-=======
     	return z;
     }
-    
->>>>>>> 083ba1a766fbd0f1f0f13d076beab2d84d1b6c53
     private Node removeNode(Node x, Node from){
     	Node toRemove = from;
     	Node toReturn = null;
@@ -310,62 +301,4 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 			}
 		}
     }
-<<<<<<< HEAD
-=======
-    
-    public static void main(String[] args) {
-		BacktrackingBST tree = new BacktrackingBST(new Stack(), new Stack());
-		tree.insert(new Node(4, 4));
-//		tree.delete(new Node(4, 4));
-		tree.insert(new Node(7, 7));
-//		tree.print();
-//		tree.backtrack();
-//		tree.print();
-		tree.insert(new Node(2, 2));
-		tree.insert(new Node(3, 3));
-		tree.insert(new Node(5, 5));
-		tree.insert(new Node(1, 1));
-		tree.insert(new Node(9, 9));
-		tree.insert(new Node(8, 8));
-		tree.insert(new Node(11, 11));
-//		System.out.println(tree.maximum().key+" "+tree.minimum().key);
-//		System.out.println(tree.predecessor(new Node(7,7)).key+" "+tree.predecessor(new Node(1,1)));
-//		System.out.println(tree.successor(new Node(7,7)).key+" "+tree.successor(new Node(1,1)).key);
-//		tree.print();
-//		tree.delete(new Node(4, 4));
-		tree.print();
-		tree.delete(new Node(1, 1));
-		tree.delete(new Node(2, 2));
-		tree.delete(new Node(4, 4));
-		tree.print();
-		tree.backtrack();
-		tree.print();
-		tree.backtrack();
-		tree.print();
-		tree.backtrack();
-		tree.print();
-		tree.insert(new Node(222, 222));
-		tree.retrack();
-		tree.print();
-		tree.retrack();
-		tree.print();
-		tree.retrack();
-		tree.print();
-//		tree.backtrack();
-//		tree.print();
-//		tree.backtrack();
-//		tree.print();
-//		tree.backtrack();
-//		tree.print();
-//		tree.backtrack();
-//		tree.print();
-//		tree.backtrack();
-//		tree.print();
-//		tree.retrack();
-//		tree.print();
-//		tree.retrack();
-//		tree.print();
-////		System.out.println(tree.search(2).parent.key);
-	}
->>>>>>> 083ba1a766fbd0f1f0f13d076beab2d84d1b6c53
 }

@@ -151,17 +151,4 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         System.out.print(arr[size-1]);
         System.out.println();
     }
-    public static void main(String[] args) {
-		BacktrackingSortedArray tamir = new BacktrackingSortedArray(new Stack(), 3);
-		tamir.insert(4);
-		tamir.insert(3);
-		tamir.insert(9);
-		tamir.print();
-		tamir.backtrack();
-		tamir.print();
-		tamir.delete(1);
-		tamir.print();
-		tamir.backtrack();
-		tamir.print();
-	}
 }

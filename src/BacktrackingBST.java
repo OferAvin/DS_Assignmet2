@@ -259,4 +259,22 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 			}
 		}
     }
+    public static void main(String[] args) {
+		BacktrackingBST tree = new BacktrackingBST(new Stack(), new Stack());
+		tree.insert(new Node(4, 4));
+		tree.insert(new Node(5, 5));
+		Node tamir = new Node(6, 6);
+		tree.insert(tamir);
+		tree.insert(new Node(7, 7));
+		tree.insert(new Node(8, 8));
+		tree.print();
+		tree.backtrack();
+		tree.print();
+		tree.delete(tamir);
+		tree.print();
+		tree.backtrack();
+		tree.print();
+		System.out.println(tamir.right.key);
+
+    }
 }

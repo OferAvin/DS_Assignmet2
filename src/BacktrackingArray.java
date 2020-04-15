@@ -51,10 +51,10 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer minimum() {
-        int min=arr[0];
+        int min=0;
         for(int i=1;i<size;i=i+1) {
-        	if(min>arr[i]) {
-        		min=arr[i];
+        	if(arr[min]>arr[i]) {
+        		min=i;
         	}
         }
         return min;
@@ -62,10 +62,10 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer maximum() {
-        int max=arr[0];
+        int max=0;
         for(int i=1;i<size;i=i+1) {
-        	if(max<arr[i]) {
-        		max=arr[i];
+        	if(arr[max]<arr[i]) {
+        		max=i;
         	}
         }
         return max;

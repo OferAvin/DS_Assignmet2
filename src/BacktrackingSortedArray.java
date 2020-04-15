@@ -101,12 +101,12 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer minimum() {
-        return arr[0];
+        return 0;
     }
 
     @Override
     public Integer maximum() {
-        return arr[size-1];
+        return size-1;
     }
 
     @Override

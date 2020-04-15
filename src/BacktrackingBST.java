@@ -232,13 +232,13 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     	leafRemove(rightSubTreeMin);
     	stack.push(rightSubTreeMin);//push replacement to stack for backtracking
     }
-    private void replaceNodeWithLeaf(Node toReplace, Node replacement) {
+    private void replaceNodeWithLeaf(Node toReplace, Node leaf) {
     	int replacedKey = toReplace.getKey();
     	Object replaceVal = toReplace.getValue();
-    	toReplace.key = replacement.getKey();
-    	toReplace.value = replacement.getValue();
-    	replacement.key = replacedKey;
-    	replacement.value = replaceVal;
+    	toReplace.key = leaf.getKey();
+    	toReplace.value = leaf.getValue();
+    	leaf.key = replacedKey;
+    	leaf.value = replaceVal;
     }
     private Node subTreeMin(Node subTreeRoot) {
         Node min = subTreeRoot;
@@ -336,26 +336,27 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 		tree.print();
 		tree.backtrack();
 		tree.print();
+		tree.insert(new Node(222, 222));
 		tree.retrack();
 		tree.print();
 		tree.retrack();
 		tree.print();
 		tree.retrack();
 		tree.print();
-		tree.backtrack();
-		tree.print();
-		tree.backtrack();
-		tree.print();
-		tree.backtrack();
-		tree.print();
-		tree.backtrack();
-		tree.print();
-		tree.backtrack();
-		tree.print();
-		tree.retrack();
-		tree.print();
-		tree.retrack();
-		tree.print();
+//		tree.backtrack();
+//		tree.print();
+//		tree.backtrack();
+//		tree.print();
+//		tree.backtrack();
+//		tree.print();
+//		tree.backtrack();
+//		tree.print();
+//		tree.backtrack();
+//		tree.print();
+//		tree.retrack();
+//		tree.print();
+//		tree.retrack();
+//		tree.print();
 ////		System.out.println(tree.search(2).parent.key);
 	}
 }

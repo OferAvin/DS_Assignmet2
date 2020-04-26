@@ -131,7 +131,6 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
        for(int i=0;i<size-1;i=i+1)
     	   System.out.print(arr[i]+" ");
        System.out.print(arr[size-1]);
-       System.out.println();
     }
 }
 

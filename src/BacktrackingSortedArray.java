@@ -51,7 +51,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 	}
     
     private int toInsert(Integer x) {
-    	int index_to_insert=size;
+    	int index_to_insert=0;
     	int low = 0;
     	int high = size-1;
     	while(high>=low) {
@@ -149,6 +149,6 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         for(int i=0;i<size-1;i=i+1)
      	   System.out.print(arr[i]+" ");
         System.out.print(arr[size-1]);
-        System.out.println();
     }
 }
+

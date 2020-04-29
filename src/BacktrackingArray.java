@@ -33,19 +33,18 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     	if(size == arr.length) {}	
     	arr[size] = x;
     	size = size + 1;
-    	stack.push(true);
+    	stack.push(true);        		//true represents insert
     }
 
     @Override
     public void delete(Integer value) {
-    	if(value >= size) {}
     	int index = search(value);
     	if(index != -1) {
-    		arr[index] = arr[size-1];
-    		size = size-1;
+    		arr[index] = arr[size-1];	//put the last value in the deleted value index
+    		size = size-1;				
 	    	stack.push(value);
 	    	stack.push(index);
-	    	stack.push(false);
+	    	stack.push(false);			//false represent delete
     	}
     }
 
@@ -108,10 +107,10 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     @Override
     public void backtrack() {
         if(!stack.isEmpty()) {
-        	if((boolean)stack.pop()) {       		
+        	if((boolean)stack.pop()) { 			//insertion backtrack   		
         		size = size-1;
         	}
-        	else {
+        	else {								//deletion backtrack
         		int index = (int)stack.pop();
         		int value = (int)stack.pop();
         		arr[size] = arr[index];

@@ -23,7 +23,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     		else
     			currNode = currNode.right;
     	}
-    	return new Node(currNode); //return a copy of the node
+    	return new Node(currNode); 	//return a copy of the node
     }
 
     public void insert(BacktrackingBST.Node z) {
@@ -60,7 +60,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     			ans = ans.parent;
     	}
     	else
-		//else look for min in x right subtree
+    			//else look for min in x right subtree
     		ans = subTreeMin(ans.right);
     	return new Node(ans);
     }
@@ -102,7 +102,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     private void deleteBacktrack(Node node) {
     	insertAsChild(node);
 		if(node.right != null && node.left != null) {	//backtrack a two child node deletion
-			Node toReInsert = (Node)stack.pop(); 		//this is the node which replaced the deleted node
+			Node toReInsert = (Node)stack.pop(); 		//toReinsert is the node which replaced the deleted node 
 			replaceNodeWithLeaf(node, toReInsert);
 			redoStack.push(toReInsert); 				// for retracting
 			insertAsChild(toReInsert);
@@ -240,11 +240,12 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     //this function deletes a node with two children
     private void twoChildrenNodeRM(Node toRemove) {
     	Node rightSubTreeMin = subTreeMin(toRemove.right);  //look for replacement 
-    	replaceNodeWithLeaf(toRemove, rightSubTreeMin);
-    	leafRemove(rightSubTreeMin);
-    	stack.push(rightSubTreeMin);//push replacement to stack for backtracking
+    	replaceNodeWithLeaf(toRemove, rightSubTreeMin);		//switch parameters between deleted node and a replacement leaf
+    	leafRemove(rightSubTreeMin);						//remove leaf (with the deleted node parameters)
+    	stack.push(rightSubTreeMin);						//push replacement to stack for backtracking
     }
-    //this function finds a replacement for a two child node which have to be deleted
+    //this function switches the parameters of two nodes 
+    //it is used in order to delete a node with two children  
     private void replaceNodeWithLeaf(Node toReplace, Node leaf) {
     	int replacedKey = toReplace.getKey();
     	Object replaceVal = toReplace.getValue();

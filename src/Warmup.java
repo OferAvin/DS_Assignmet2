@@ -11,7 +11,7 @@ public class Warmup {
         	else {
 				num_of_steps=num_of_steps+1;
 				myStack.push(arr[i]);
-				if(num_of_steps==fd) {perform backtrack bk times
+				if(num_of_steps==fd) {//perform backtrack bk times
 					i=i-bk;
 					num_of_steps=0;
 					for(int j=1;j<=bk;j=j+1) {

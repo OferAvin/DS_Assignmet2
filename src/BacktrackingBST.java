@@ -10,7 +10,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 
     public Node getRoot() {
-        return root;
+    	 return root;
     }
 	
     public Node search(int x) {

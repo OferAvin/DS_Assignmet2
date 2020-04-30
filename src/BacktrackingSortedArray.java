@@ -13,7 +13,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     public Integer get(int index){
         return arr[index];
     }
-
+    
     @Override
     public Integer search(int x) {//binary search
         int ans = -1;

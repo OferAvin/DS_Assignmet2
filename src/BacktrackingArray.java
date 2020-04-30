@@ -1,7 +1,7 @@
 public class BacktrackingArray implements Array<Integer>, Backtrack {
     private Stack stack;
     private int[] arr;
-    private int size;
+    private int size;//the index for the next available cell
 
     // Do not change the constructor's signature
     public BacktrackingArray(Stack stack, int size) {

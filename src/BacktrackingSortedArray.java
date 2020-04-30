@@ -1,7 +1,7 @@
 public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     private Stack stack;
     private int[] arr;
-    private int size;
+    private int size;//the index for the next available cell
 
     // Do not change the constructor's signature
     public BacktrackingSortedArray(Stack stack, int size) {
@@ -15,7 +15,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     }
 
     @Override
-    public Integer search(int x) {
+    public Integer search(int x) {//binary search
         int ans = -1;
         int low=0;
         int high=size-1;
@@ -37,19 +37,19 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 
     @Override
     public void insert(Integer x) {
-    	int index_to_insert = toInsert(x);
-    	add(x, index_to_insert);
-        stack.push(index_to_insert);
-        stack.push(true);
+    	int index_to_insert = toInsert(x);//searching for the correct index to insert
+    	add(x, index_to_insert);//add x to the correct index 
+        stack.push(index_to_insert);//saving the index for backtrack
+        stack.push(true);//true represents insert
         }
-    private void add(Integer x,int index_to_insert ) {
-    	for(int j=size-1;j>=index_to_insert;j=j-1) {
+    private void add(Integer x,int index_to_insert ) {//this method adds x at the index_to_insert to array 
+    	for(int j=size-1;j>=index_to_insert;j=j-1) {//pushing all cell from index_to_insert on cell forward
     		arr[j+1] = arr[j];
         }
         arr[index_to_insert] = x;
         size = size+1;
 	}
-    
+    //this function finding the correct index for insert by binary search
     private int toInsert(Integer x) {
     	int index_to_insert=0;
     	int low = 0;
@@ -83,14 +83,14 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     public void delete(Integer index) {
         int value = arr[index];
         remove(index);
-        stack.push(index);
-        stack.push(value);
-        stack.push(false);
+        stack.push(index);//saving the index for backtrack
+        stack.push(value);//saving the value for backtrack
+        stack.push(false);//false represent delete
     }
-    private void remove(Integer index) {
+    private void remove(Integer index) {//this method delete the element in the specific index and organize the array
         int i=size-1;
         int prev = arr[i];
-        while(i>index) {
+        while(i>index) {//moving each cell one cell back till the index to remove
         	int next = arr[i-1];
         	arr[i-1] = prev;
         	prev = next;
@@ -130,11 +130,11 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     @Override
     public void backtrack() {
         if(!stack.isEmpty()) {
-        	if((boolean)stack.pop()==true) {
-        		remove((int)stack.pop());
+        	if((boolean)stack.pop()==true) {//insertion backtrack
+        		remove((int)stack.pop());   //use remove with the correct index
         	}
-        	else {
-				add((int)stack.pop(), (int) stack.pop());
+        	else {//deletion backtrack
+				add((int)stack.pop(), (int) stack.pop());//use add with the correct index and value
 			}
         }
     }

@@ -1,7 +1,7 @@
 public class Warmup {
     public static int backtrackingSearch(int[] arr, int x, int fd, int bk, Stack myStack) {
         int ans=-1;
-        int num_of_steps=0;
+        int num_of_steps=0;//counting num_of_steps in order to perform backtrack correct
         boolean found=false;
         for(int i=0;i<arr.length & !found;i=i+1) {
         	if(arr[i]==x) {
@@ -11,7 +11,7 @@ public class Warmup {
         	else {
 				num_of_steps=num_of_steps+1;
 				myStack.push(arr[i]);
-				if(num_of_steps==fd) {
+				if(num_of_steps==fd) {perform backtrack bk times
 					i=i-bk;
 					num_of_steps=0;
 					for(int j=1;j<=bk;j=j+1) {
